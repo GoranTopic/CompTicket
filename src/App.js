@@ -112,7 +112,7 @@ function App() {
             </Box>
             <Box sx={{ marginTop: 8, textAlign: 'center' }}>
               <Typography variant="subtitle" paragraph>
-                All if data is aquired form Yahoo Finance API and Yahoo Finance Website.
+                All data is aquired form Yahoo Finance API and Yahoo Finance Website.
               </Typography>
               <Typography variant="subtitle" paragraph>
                 By Goran Topic
