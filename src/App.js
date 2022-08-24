@@ -96,7 +96,7 @@ function App() {
               <FinancialStatements stocks={stocks} />
               <StockChart stocks={stocks} setStocks={setStocks} />
               <RateOfReturn stocks={stocks} />
-              {/*<Beta stocks={stocks} />*/}
+              <Beta stocks={stocks} />
               <WACC stocks={stocks} />
               <WeightedPortafolio stocks={stocks} />
             </Grid>
