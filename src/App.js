@@ -86,7 +86,7 @@ function App() {
     <NoSsr>
       <MuiThemeProvider theme={lightTheme}>
         <ThemeProvider theme={lightTheme}>
-          <Box margin={'5%'} justifyContent={'center'} alignItems='center' >
+          <Box margin={'5%'} justifyContent='center' alignItems='center' >
             <SearchBar selectStock={stock => setSelectedStock(stock)} />
             <StockChip stocks={stocks} setStocks={setStocks} />
             <Grid container columns={{ xs: 1, sm: 1, md: 12, lg: 12, xl: 14 }}
@@ -96,7 +96,7 @@ function App() {
               <FinancialStatements stocks={stocks} />
               <StockChart stocks={stocks} setStocks={setStocks} />
               <RateOfReturn stocks={stocks} />
-              <Beta stocks={stocks} />
+              {/*<Beta stocks={stocks} />*/}
               <WACC stocks={stocks} />
               <WeightedPortafolio stocks={stocks} />
             </Grid>

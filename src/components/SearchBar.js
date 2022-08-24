@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Box } from '@mui/system';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -35,7 +36,9 @@ export default function AsycnSearchBar({selectStock}) {
 
   return <>
     <Autocomplete
-      sx={{ maxWidth: 900 }}
+      sx={{ marginX: "5%" }}
+      alignSelf='center'
+      justifySelf='center'
       id="Stock Search"
       autoHighlight
       open={open}

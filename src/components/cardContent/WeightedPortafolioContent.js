@@ -203,60 +203,62 @@ export default function DocContent({ expand, stocks }) {
     return <>
         <StyledCardContent $expand={expand}>
             <ThemeProvider theme={theme}>
-                <Typography variant="h4"> Weights Input </Typography>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                {portafolio.stocks.map((s, i) =>
-                    <TextField
-                        sx={{ m: 1, width: '25ch' }}
-                        key={i}
-                        id="standard-basic"
-                        label={s.shortname + "'s Weight"}
-                        variant="standard"
-                        value={weights[i] * 100}
-                        onChange={createOnChangeWeight(i)}
-                        type="number"
-                    //inputProps={{ 'aria-label': 'weight' }}
-                    //InputLabelProps={{ shrink: true, }}
-                    InputProps={{
-                        startAdornment: <InputAdornment position="end">%</InputAdornment>,
-                      }}
-                    />
-                )}
+                <Box sx={{ paddingX: '6%', marginY: '3%' }}>
+                    <Typography variant="h4"> Weights Input </Typography>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                        {portafolio.stocks.map((s, i) =>
+                            <TextField
+                                sx={{ m: 1, width: '25ch' }}
+                                key={i}
+                                id="standard-basic"
+                                label={s.shortname + "'s Weight"}
+                                variant="standard"
+                                value={weights[i] * 100}
+                                onChange={createOnChangeWeight(i)}
+                                type="number"
+                                //inputProps={{ 'aria-label': 'weight' }}
+                                //InputLabelProps={{ shrink: true, }}
+                                InputProps={{
+                                    startAdornment: <InputAdornment position="end">%</InputAdornment>,
+                                }}
+                            />
+                        )}
+                    </Box>
+                    <Typography variant="h6"> Portafolio risk:</Typography>
+                    {(portafolio.risk) ? <Typography >
+                        Portfolio Risk = √ [ {portafolio.stocks.map((s, i) =>
+                            `(${s.symbol}'s weight (${weights[i]})^2 * ${s.symbol}'s Standard Deviation (${s.standardDeviation.toFixed(3)})^2) + `
+                        )}
+                        {portafolio.correlations.map((c, i) =>
+                            `( 2 * (${c.symbol1} and ${c.symbol2}'s corration: ${c.correlation.toFixed(3)}) * (${c.symbol1}'s Standard Deviation (${c.stdDev1.toFixed(3)}) * (${c.symbol2}'s Standard Deviation (${c.stdDev2.toFixed(3)})) ${(i !== portafolio.correlations.length - 1) ? " + " : ""}`
+                        )} ] = <b>{portafolio.risk.toFixed(4)}</b>
+                    </Typography> : <></>}
+                    <Typography variant="h6"> Portafolio returns:</Typography>
+                    {(portafolio.return) ? <Typography >
+                        Portfolio Returns = {portafolio.stocks.map((stock, i) =>
+                            `(${stock.symbol}'s weight: ${weights[i]} * ${stock.symbol}'s mean return: ${stock.mean}) ${(i !== portafolio.stocks.length - 1) ? " + " : ""}`
+                        )} = <b>{portafolio.return.toFixed(4)}</b>
+                    </Typography> : <></>}
+                    <CanvasJSChart options={{
+                        animationEnabled: true,
+                        exportEnabled: true,
+                        theme: "dark1", // "light1", "dark1", "dark2"
+                        title: {
+                            text: "Efficincy Fonteer"
+                        },
+                        axisY: {
+                            title: "returns",
+                        },
+                        axisX: {
+                            title: "Risk",
+                            interval: 2
+                        },
+                        data: [{
+                            type: "line",
+                            dataPoints: efficientFrontier,
+                        }]
+                    }} />
                 </Box>
-                <Typography variant="h6"> Portafolio risk:</Typography>
-                {(portafolio.risk)? <Typography >
-                    Portfolio Risk = √ [ {portafolio.stocks.map((s, i) =>
-                        `(${s.symbol}'s weight (${weights[i]})^2 * ${s.symbol}'s Standard Deviation (${s.standardDeviation.toFixed(3)})^2) + `
-                    )} 
-                    {portafolio.correlations.map((c, i) =>
-                        `( 2 * (${c.symbol1} and ${c.symbol2}'s corration: ${c.correlation.toFixed(3)}) * (${c.symbol1}'s Standard Deviation (${c.stdDev1.toFixed(3)}) * (${c.symbol2}'s Standard Deviation (${c.stdDev2.toFixed(3)})) ${(i !== portafolio.correlations.length - 1) ? " + " : ""}`
-                    )} ] = <b>{portafolio.risk.toFixed(4)}</b> 
-                </Typography> : <></> }
-                <Typography variant="h6"> Portafolio returns:</Typography>
-                {(portafolio.return)? <Typography >
-                    Portfolio Returns = { portafolio.stocks.map((stock, i) => 
-                    `(${stock.symbol}'s weight: ${weights[i]} * ${stock.symbol}'s mean return: ${stock.mean}) ${(i !== portafolio.stocks.length - 1) ? " + " : ""}`
-                    )} = <b>{portafolio.return.toFixed(4)}</b> 
-                </Typography>: <></>}
-                <CanvasJSChart options={{
-                    animationEnabled: true,
-                    exportEnabled: true,
-                    theme: "dark1", // "light1", "dark1", "dark2"
-                    title: {
-                        text: "Efficincy Fonteer"
-                    },
-                    axisY: {
-                        title: "returns",
-                    },
-                    axisX: {
-                        title: "Risk",
-                        interval: 2
-                    },
-                    data: [{
-                        type: "line",
-                        dataPoints: efficientFrontier,
-                    }]
-                }} />
             </ThemeProvider>
         </StyledCardContent>
     </>
