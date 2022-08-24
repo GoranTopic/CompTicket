@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+document.title = "TicketComp"
 // this make useEffect run twice... beware
 root.render(
   //<React.StrictMode> 
