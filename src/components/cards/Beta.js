@@ -51,9 +51,9 @@ export default function RateOfReturn({ stocks, index }) {
       setSDY({
         ...data,
         color: {
-          topColor: 'rgb(186,182,182, 0.56)',
-          bottomColor: 'rgb(186,182,182, 0.04)',
-          lineColor: 'rgb(186,182,182, 1)',
+          topColor: 'rgba(186,182,182, 0.56)',
+          bottomColor: 'rgba(186,182,182, 0.04)',
+          lineColor: 'rgba(186,182,182, 1)',
         },
         active: true
       });
@@ -75,7 +75,7 @@ export default function RateOfReturn({ stocks, index }) {
     // or if we have the data for it
     return <>
         <ExpandableCard stocks={[ ...activeStocks, SDY ]} title={title} subheader={subheader} >
-            <BetaContent stocks={[ ...activeStocks, SDY ]} index={index} />
+            <BetaContent stocks={activeStocks} SDYStock={SDY} index={index} />
         </ExpandableCard>
     </>
 }

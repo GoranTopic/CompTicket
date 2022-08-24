@@ -109,8 +109,6 @@ export const ChartContainer = forwardRef((props, ref) => {
 		const chart = currentRef.api();
         resizeObserver.current = new ResizeObserver(entries => {
             const { width, height } = entries[0].contentRect;
-            console.log('width container:', width)
-            console.log('height container:', height)
             // apply it to the chart
             chart.applyOptions({ width, height });
             // make a time out so it looks smoother?

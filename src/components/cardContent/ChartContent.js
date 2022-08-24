@@ -47,53 +47,16 @@ export default function ChartContent({ expand, stocks }) {
       });
       setCandleStickData([...candleStickData, newCandleStickData]);
       setVolumeData([...volumeData, newVolumeData]);
-      setAreaData([...areaData, {...stock, data:newAreaData}]);
+      setAreaData([...areaData, {...stock, data: newAreaData}]);
     })
   }, [stocks]);
-
-
-  let mockStock = [
-    {
-      ref: React.useRef(null),
-      data: [
-        { time: '2018-10-11', value: 52.89 },
-        { time: '2018-10-12', value: 51.65 },
-        { time: '2018-10-13', value: 51.56 },
-        { time: '2018-10-14', value: 50.19 },
-        { time: '2018-10-15', value: 51.86 },
-        { time: '2018-10-16', value: 51.25 },
-      ],
-      color: {
-        lineColor: '#FFC629',
-      }
-    },
-    {
-      ref: React.useRef(null),
-      data: [
-        { time: '2018-10-11', value: 90.89 },
-        { time: '2018-10-12', value: 71.65 },
-        { time: '2018-10-13', value: 81.56 },
-        { time: '2018-10-14', value: 90.19 },
-        { time: '2018-10-15', value: 21.86 },
-        { time: '2018-10-16', value: 11.25 },
-      ],
-      color: {
-        lineColor: '#FFC0CB',
-      }
-    }
-  ]
-
-  let options = {
-    backgroundColor: 'black',
-    textColor: 'white',
-  }
 
   return <>
     <StyledCardContent $expand={expand}>
       {
         //false ?  ((candleStickData && volumeData) ? <ChandleStickChart candleStickData={candleStickData} volumeData={volumeData} /> : <></>) : (areaData.length? <AreaChart areaData={areaData} /> : <></>)
       }
-      <LineChart stocks={areaData} options={options}/>
+      <LineChart stocks={areaData} />
     </StyledCardContent>
   </>
 }

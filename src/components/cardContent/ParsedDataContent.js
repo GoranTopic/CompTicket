@@ -37,7 +37,7 @@ export default function ParsedDataContent({ expand, stocks }) {
         keySet.add(key)
       )
     )
-    console.log("keySet:", keySet)
+    //console.log("keySet:", keySet)
     data.forEach(data => delete data.maxAge);
     setStockData([...data]);
     setKeys([...keySet]);

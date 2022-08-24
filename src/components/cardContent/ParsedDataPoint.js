@@ -42,8 +42,8 @@ export default function ParseDataPoint({ label, data, showLabel, color }) {
             }
         } catch (e) {
             console.error(e)
-            console.log('data:', typeof data);
-            console.log('data:', data);
+            //console.log('data:', typeof data);
+            //console.log('data:', data);
         }
     }, []);
 

@@ -37,8 +37,6 @@ export default function AsycnSearchBar({selectStock}) {
   return <>
     <Autocomplete
       sx={{ marginX: "5%" }}
-      alignSelf='center'
-      justifySelf='center'
       id="Stock Search"
       autoHighlight
       open={open}
