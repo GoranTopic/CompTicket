@@ -10,6 +10,7 @@ import Grid from '@mui/material/Grid';
 import Grow from '@mui/material/Grow';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
+import { Box } from '@mui/material';
 import stylize from '../utils/stylize.js';
 
 
@@ -39,7 +40,7 @@ const StyledAvatar = stylize(Avatar,
         "&:hover": {
             transform: 'scale(1.3)',
             //transform: $expand ? 'rotate(-30deg)' : 'rotate(0deg)',
-            transform: 'rotate(30deg)',
+            //transform: 'rotate(30deg)',
         },
     })
 );
@@ -88,15 +89,16 @@ export default function ExpandableCard({ stocks, title, subheader, timeout, chil
             <Grid container item justifyContent="center" alignItems="center" style={{ textAlign: "center" }}
                 xs={14} sm={expand ? 14 : 8} md={expand ? 14 : 4} lg={expand ? 14 : 4} xl={expand ? 14 : 4} order={expand ? 1 : 2} >
                 <StyledPaper $expand={expand} onClick={expandCard} elevation={5} >
-                    <CardHeader avatar={<>
-                        {stocks.map(stock => // maybe find a way to add company logo in src={}
-                            <StyledAvatar sx={{ 
-                                backgroundColor: stock.color.topColor,
-                                marginX: '2%'
-                                 }} alt={stock.symbol} key={stock.symbol}>
-                                {stock.symbol}
-                            </StyledAvatar>)}
-                    </>}
+                    <CardHeader avatar={
+                        <Grid container item justifyContent='center' alignItems="center">
+                            {stocks.map(stock => // maybe find a way to add company logo in src={}
+                                <StyledAvatar sx={{
+                                    backgroundColor: stock.color.topColor,
+                                    marginX: '2%'
+                                }} alt={stock.symbol} key={stock.symbol}>
+                                    {stock.symbol}
+                                </StyledAvatar>)}
+                        </Grid>}
                         action={
                             <ExpandMore $expand={expand} onClick={toggleExpand} aria-expanded={expand} aria-label="show more">
                                 <ExpandMoreIcon />

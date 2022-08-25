@@ -45,7 +45,7 @@ export default function DocContent({ expand, stocks }) {
                     <Box key={i} sx={{ paddingX: '6%', marginY:'3%' }}>
                         <Typography variant="h4" sx={{ alignText: 'center' }}>{stock.shortname}'s Annual Rate of Return</Typography>
                         <Typography>The rate of return of a asset can tell us how much excess value has the asset generated over a period of time.
-                            In most case we can caculate this by subtracting the final value of the asset by the initial value and dividint it by inital value:
+                            In most case we can caculate this by subtracting the final value of the asset by the initial value and divide it by inital value:
                             We might not have 20 years of value for all stocks, but for {stock.shortname} we have {timeSpan} years worth of data
                             Starting from {firstClose.time.format('MMMM Do YYYY')}, where the adjusted close value for {stock.shortname} was {firstClose.value} {meta.currency},
                             to {lastClose.time.format('MMMM Do YYYY')}, where the  adjusted close value for {stock.shortname} was {lastClose.value} {meta.currency}.

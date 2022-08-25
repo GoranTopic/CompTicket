@@ -4,8 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
 document.title = "TicketComp"
+const root = ReactDOM.createRoot(document.getElementById('root'));
 // this make useEffect run twice... beware
 root.render(
   //<React.StrictMode> 
