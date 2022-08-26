@@ -30,8 +30,8 @@ export default function DocContent({ expand, stocks }) {
     let totalEquity = stock.balanceSheet['totalAssets']['raw'] - stock.balanceSheet['totalLiab']['raw'];
     //console.log("totalEquity:", totalEquity)
 
-    let longTermDebt = stock.balanceSheet['longTermDebt']?.longFmt ?? stock.balanceSheet['longTermDebt']?.raw;
-    let shortTermDebt = stock.balanceSheet['shortLongTermDebt']?.longFmt ?? stock.balanceSheet['shortLongTermDebt']?.raw;
+    let longTermDebt = stock.balanceSheet['longTermDebt']?.raw;
+    let shortTermDebt = stock.balanceSheet['shortLongTermDebt']?.raw;
     let cash = stock.balanceSheet['cash']?.longFmt ?? stock.balanceSheet['cash']?.raw;
     let totalDebt = stock.quoteSummary.financialData["totalDebt"]['raw'] ?? (
         stock.balanceSheet['longTermDebt']['raw'] +
@@ -39,7 +39,8 @@ export default function DocContent({ expand, stocks }) {
         stock.balanceSheet['accountsPayable']['raw']
     ) - stock.balanceSheet['cash']['raw'];
     //console.log("total debt:", totalDebt)
-    let USRiskFreePremium = 2.79; // magic...
+
+    let USRiskFreePremium = 2.81; // magic...
 
     // Beta
     let beta = stock.quoteSummary.defaultKeyStatistics?.beta?.fmt // ?? custom beta
@@ -51,36 +52,34 @@ export default function DocContent({ expand, stocks }) {
     let firstClose = { time: moment.unix(timestamp.at(0)), value: adjclose.at(0) }
     let lastClose = { time: moment.unix(timestamp.at(-1)), value: adjclose.at(-1) }
     let timeSpan = lastClose.time.diff(firstClose.time, 'years', true).toFixed(2);
-    let rateOfReturn = (Math.pow((lastClose.value / firstClose.value), (1 / timeSpan)) - 1).toFixed(3)
+    let rateOfReturn = (Math.pow((lastClose.value / firstClose.value), (1 / timeSpan)) - 1)*100
     //console.log('ror', rateOfReturn)
     
     let costOfEquity = USRiskFreePremium + (beta * rateOfReturn);
 
     //console.log('cost of equity:', costOfEquity);
-
-    let currentinteresetRate = "2.25%-2.5%";
     let interesetRate = 2.30;
 
     let equityAndDebt = totalEquity + totalDebt;
-    let equityProportion = totalEquity / equityAndDebt;
-    let debtProportion = totalDebt / equityAndDebt;
+    let equityProportion = (totalEquity / equityAndDebt);
+    let debtProportion = (totalDebt / equityAndDebt);
 
-    let proportionalCostOfEquity = (equityProportion * costOfEquity)
-    let proportionalCostOfDebt = debtProportion *  interesetRate;
+    let proportionalCostOfEquity = (equityProportion * costOfEquity);
+    let proportionalCostOfDebt = (debtProportion *  interesetRate);
 
-    let WACC = (proportionalCostOfEquity + proportionalCostOfDebt)
+    let WACC = (proportionalCostOfEquity + proportionalCostOfDebt);
 
     return <>
         <StyledCardContent $expand={expand}>
             <ThemeProvider theme={theme}>
                 <Box sx={{ paddingX: '6%', marginY: '3%' }}>
                     <Typography variant="h4"> The Weighted Average Cost of Capital </Typography>
-                    <Typography > The Weighted Average Cost of Capital (WACC) is a mesure of how is the money raised going to cost a company. It is often used a internal mesurement for a company to figure out whether it will be profitable to inestin a poject or not. However it is also used by inverstor who want to know the state of a company.  </Typography>
+                    <Typography > The Weighted Average Cost of Capital (WACC) is a measure of how is the money raised going to cost a company. It is often used an internal measurement for a company to figure out whether it will be profitable to invest in a project. However, it is also used by investor who want to know the state of a company.  </Typography>
                     <Typography> The formula for the WACC is: <b>WACC = (% Proportion of Equity * Cost of Equity) + (% Proportion of Debt * Cost of Debt * (1 - Tax Rate))</b> </Typography>
-                    <Typography> Where the <b>Proportion of Equity</b> is the ammount of equity that the company has in relation to Equity + Debt </Typography>
-                    <Typography> The <b>Proportion of Debt</b> is the ammount of Debt that the company has in relation to Equity + Debt </Typography>
+                    <Typography> Where the <b>Proportion of Equity</b> is the amount of equity that the company has in relation to Equity + Debt </Typography>
+                    <Typography> The <b>Proportion of Debt</b> is the amount of Debt that the company has in relation to Equity + Debt </Typography>
                     <Typography> The <b>Cost of Equity</b> is the current value of stock</Typography>
-                    <Typography> The <b>Cost of Debt</b> is price of the debt? </Typography>
+                    <Typography> The <b>Cost of Debt</b> is the interest on the borrowed money </Typography>
                     <Typography> The <b>Tax Rate</b> is how high are the taxes for thr debt</Typography>
                     <Typography> The proportion of equity and proportion of debt are found by dividing the total assets of a company by each respective account.  </Typography>
                     <Typography> Thus the Proportion of Debt = Total Assets / Total Debt </Typography>
@@ -91,19 +90,19 @@ export default function DocContent({ expand, stocks }) {
                     <Typography> Total Equity / (Total Equity + the Total Debt). In the case of {stock.shortname} we know that the total equity is the total Assets: {totalAssets} - the total liabilities: {totalLiab} = {totalEquity}  </Typography>
                     <Typography> Total debt can be found by the formula by adding the long term debt({longTermDebt}) and the short term debt ({shortTermDebt}) minus the cash ({cash}) = {totalDebt} </Typography>
                     <Typography> Now that we have the Total Debt ({totalDebt}) and the total Equity ({totalEquity}) we can calcualte the proportions of each by the formula: </Typography>
-                    <Typography> Equity Proportion = Total Equity ({totalEquity}) / Total Equity + Total Debt ({equityAndDebt}) = {equityProportion} </Typography>
-                    <Typography> Debt Proportion = Total Debt ({totalDebt}) / Total Equity + Total Debt ({equityAndDebt}) = {debtProportion} </Typography>
+                    <Typography> Equity Proportion = Total Equity ({totalEquity}) / Total Equity + Total Debt ({equityAndDebt}) = {equityProportion.toFixed(4)} </Typography>
+                    <Typography> Debt Proportion = Total Debt ({totalDebt}) / Total Equity + Total Debt ({equityAndDebt}) = {debtProportion.toFixed(4)} </Typography>
                     <Typography> <b>Step 2: Determine the Cost of Equity: </b> </Typography>
-                    <Typography> Not all companies dive off dividents, thus the usual way of calcualting the Cost Of Equity which involve the dividents of Share / price of the stock, might not work</Typography>
+                    <Typography> Not all companies pay off dividends, thus the usual way of calculating the Cost Of Equity which involve the dividents of Share / price of the stock, might not work</Typography>
                     <Typography> I have thus chosen to use the CAPM Approach: (Rate Of Return) + Beta * (Market Risk Free Rate of Return) </Typography>
-                    <Typography> The Beta of the company is: {beta}, the current risk free rate of return is: {USRiskFreePremium}, and the companies current rate of return is: {rateOfReturn} </Typography>
+                    <Typography> The Beta for {stock.shortname} is: {beta}, the current risk free rate of return is: {USRiskFreePremium}, and the companies current rate of return is: {rateOfReturn.toFixed(4)}% </Typography>
                     <Typography> if we plug this value into the formula we find that the Cost of Equity is {costOfEquity} </Typography>
                     <Typography> <b>Step 3: Determine the Cost of Debt: </b></Typography>
-                    <Typography> I am going to use the curret intereset rate in the United States as the cost of debt of the company which is {interesetRate} </Typography>
+                    <Typography> I am going to use the current interest rate in the United States as the cost of debt of the company which is {interesetRate} (U.S. Department of the Treasury, 2022) </Typography>
                     <Typography> <b>Step 4: Determine the WACC</b></Typography>
-                    <Typography> Ideally we would like to find the tax rate of the company, however I was unable to find reliable and programable information fro this websit, thus we are going to only count the proportial cost of debt and the proportial cost of equity</Typography>
-                    <Typography> The WACC can be found by adding the Proportional Cost of Equity with the Proportial Cost of Debt </Typography>
-                    <Typography> thus: WACC = (Debt Proportion ({debtProportion}) * Cost of Debt ({interesetRate})) + (Equity Proportion ({equityProportion}) * Cost of Equity ({costOfEquity})) = {WACC} </Typography>
+                    <Typography> Ideally we would like to find the tax rate of the company, however I was unable to find reliable and programmable information for this website, thus we are going to only count the proportional cost of debt and the proportional cost of equity</Typography>
+                    <Typography> The WACC can be found by adding the Proportional Cost of Equity with the Proportional Cost of Debt </Typography>
+                    <Typography> thus: WACC = (Debt Proportional ({debtProportion.toFixed(4)}) * Cost of Debt ({interesetRate.toFixed(4)})) + (Equity Proportion ({equityProportion.toFixed(4)}) * Cost of Equity ({costOfEquity.toFixed(4)})) = {WACC.toFixed(4)} </Typography>
                 </Box>
             </ThemeProvider>
         </StyledCardContent>

@@ -46,12 +46,12 @@ export default function DocContent({ expand, stocks, SDYStock }) {
     let closeSDY  = indicatorsSDY.quote[0].close;
     let highSDY  = indicatorsSDY.quote[0].high;
     // SDY analysis
-    let firstCloseSDY = { time: moment.unix(timestampSDY.at(0)), value: adjcloseSDY.at(0).toFixed(2) }
-    let lastCloseSDY = { time: moment.unix(timestampSDY.at(-1)), value: adjcloseSDY.at(-1).toFixed(2) }
+    let firstCloseSDY = { time: moment.unix(timestampSDY.at(0)), value: adjcloseSDY.at(0) };
+    let lastCloseSDY = { time: moment.unix(timestampSDY.at(-1)), value: adjcloseSDY.at(-1) };
     let timeSpanSDY = lastCloseSDY.time.diff(firstCloseSDY.time, 'years', true).toFixed(2);
-    let rateOfReturnSDY = (Math.pow((lastCloseSDY.value / firstCloseSDY.value), (1 / timeSpanSDY)) - 1).toFixed(3)
-    let returnsSDY = timestampSDY.map((time, i) => ({ time, value: ((closeSDY[i] - openSDY[i]) / openSDY[i]).toFixed(3) }))
-    let retrnsStdDevSDY = stats.standardDeviation(returnsSDY.map(r => r.value)).toFixed(4);
+    let rateOfReturnSDY = (Math.pow((lastCloseSDY.value / firstCloseSDY.value), (1 / timeSpanSDY)) - 1);
+    let returnsSDY = timestampSDY.map((time, i) => ({ time, value: ((closeSDY[i] - openSDY[i]) / openSDY[i]) }));
+    let retrnsStdDevSDY = stats.standardDeviation(returnsSDY.map(r => r.value));
 
 
     React.useEffect(() => {
@@ -60,12 +60,12 @@ export default function DocContent({ expand, stocks, SDYStock }) {
             let adjclose = indicators.adjclose[0].adjclose;
             let { close, open, high } = indicators.quote[0];
             // stock analysis
-            let firstClose = { time: moment.unix(timestamp.at(0)), value: adjclose.at(0).toFixed(2) }
-            let lastClose = { time: moment.unix(timestamp.at(-1)), value: adjclose.at(-1).toFixed(2) }
+            let firstClose = { time: moment.unix(timestamp.at(0)), value: adjclose.at(0) };
+            let lastClose = { time: moment.unix(timestamp.at(-1)), value: adjclose.at(-1) };
             let timeSpan = lastClose.time.diff(firstClose.time, 'years', true).toFixed(2);
-            let rateOfReturn = (Math.pow((lastClose.value / firstClose.value), (1 / timeSpan)) - 1).toFixed(3)
-            let returns = timestamp.map((time, i) => ({ time, value: ((close[i] - open[i]) / open[i]).toFixed(3) }))
-            let retrnsStdDev = stats.standardDeviation(returns.map(r => r.value)).toFixed(4);
+            let rateOfReturn = (Math.pow((lastClose.value / firstClose.value), (1 / timeSpan)) - 1);
+            let returns = timestamp.map((time, i) => ({ time, value: ((close[i] - open[i]) / open[i]) }))
+            let retrnsStdDev = stats.standardDeviation(returns.map(r => r.value));
             // get correlationn
             let corData = (returns.length <= returnsSDY.length) ?
                 returns.map((r, i) => ({ time: r.time, stock: high[i], SDY: highSDY[i] })) :
@@ -88,13 +88,13 @@ export default function DocContent({ expand, stocks, SDYStock }) {
                 {localStocks.map(stock =>
                     <Box sx={{ paddingX: '6%', marginY: '3%' }}>
                         <Typography variant="h4">
-                            Calculatin the Beta of {stock.shortname} with the S&P 500
+                            Calculating the Beta of {stock.shortname} with the S&P 500
                         </Typography>
                         <Typography>
-                            The Beta is a mesure of the volatility of a Stock has. Thus it is a mesure of how much change does the stock has in price, over a period of time.
+                            The Beta is a measure of the volatility of a Stock. Thus it is a measure of how much change does the stock has in price, over a period of time. It is a measure of the variance, and a way to determine the risk.
                         </Typography>
                         <Typography>
-                            However, to find the volatility of the sock we need isolate the changes in the sotck from the overall changes in the market. We can find the changes in the market by getting the historial values of a index fund, like the S&P 500, which reflects the changes in the 500 most profitable comapnies in the US.
+                            However, to find the volatility of the stock we need isolate the changes in the stock from the overall changes in the market. We can find the changes in the market by getting the historical values of an index fund, like the S&P 500, which reflects the changes in the 500 most profitable companies in the US.
                         </Typography>
                         <Typography>
                             To find the Beta of {stock.symbol} we need to divide the standard deviation of the returns of {stock.symbol} by the standard deviation of the returns of S&P 500.
@@ -103,16 +103,16 @@ export default function DocContent({ expand, stocks, SDYStock }) {
                             Then we multiply it by the correlation of the {stock.symbol} and the S&P 500.
                         </Typography>
                         <Typography>
-                            To calcualte the standard deviation of the return we must first find the average return of the {stock.symbol}. From our rate of return analysis we know that the Annualized Rate of Return is: {stock.rateOfReturn}%
+                            To calcualte the standard deviation of the return we must first find the average return of the {stock.symbol}. From our rate of return analysis we know that the Annualized Rate of Return is: {stock.rateOfReturn}
                         </Typography>
                         <Typography>
-                            Using the same process we can fin the SDY's Annualized Rate of Return to be {rateOfReturnSDY}%;
+                            Using the same process we can find the SDY's Annualized Rate of Return to be {rateOfReturnSDY};
                         </Typography>
                         <Typography>
-                            Form the opening can losing value we calculating rate of return of everyday for the {stock.symbol} and the S&P 500. What we get a list of values of th the return and the timestamp.
+                            Form the opening and losing value we calculating rate of return of everyday for the {stock.symbol} and the S&P 500. What we get a list of values of th the return and the timestamp.
                         </Typography>
                         <Typography>
-                            With this list we can calcualte the the standard deviation. Which will turn out to be {stock.retrnsStdDev} for {stock.symbol} and {retrnsStdDevSDY} for S&P 500.
+                            With this list we can calcualte the standard deviation. Which will turn out to be {stock.retrnsStdDev} for {stock.symbol} and {retrnsStdDevSDY} for S&P 500.
                         </Typography>
                         <Typography>
                             If we divide {stock.retrnsStdDev} / {retrnsStdDevSDY} we get: {(stock.retrnsStdDev / retrnsStdDevSDY).toFixed(3)} which we now have to multiply by the correlation of the {stock.symbol} and the S&P 500.
@@ -128,7 +128,7 @@ export default function DocContent({ expand, stocks, SDYStock }) {
                             Now that we can visualize the two data for the stock we can see how correlation coefficient is: {stock.correlationCoefficient.toFixed(5)}.
                         </Typography>
                         <Typography>
-                            With this final peice of information we can calculate the Beta of {stock.shortname} by finding: {stock.correlationCoefficient.toFixed(5)} * ({stock.retrnsStdDev} / {retrnsStdDevSDY})  =  {(stock.correlationCoefficient * (stock.retrnsStdDev / retrnsStdDevSDY)).toFixed(3)}
+                            With this final piece of information we can calculate the Beta of {stock.shortname} by finding: {stock.correlationCoefficient.toFixed(5)} * ({stock.retrnsStdDev} / {retrnsStdDevSDY})  =  {(stock.correlationCoefficient * (stock.retrnsStdDev / retrnsStdDevSDY)).toFixed(3)}
                         </Typography>
                         <Typography>
                             The Beta provided by the Yahoo Finance API for the Stock {stock.symbol} is: {stock.quoteSummary.defaultKeyStatistics?.beta?.fmt ?? "(Beta Not found)"}
