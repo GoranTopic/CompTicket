@@ -1,4 +1,5 @@
 const weight_combinator = (length, limit = 25) => {
+    console.log("weight_combinator started")
     let weights = Array(length).fill(0);
     let last = weights.length - 1;
     let combinations = [];
@@ -28,8 +29,9 @@ const weight_combinator = (length, limit = 25) => {
         endReached = raise_one(weights);
         combinations.push([...weights]);
     }
+    console.log("weight_combinator ended")
     return combinations;
 }
 
-//weight_combinator(4, 100) // example
+//weight_combinator(5, 5).map(arr => arr.map(v => v*20 )).forEach(arr => console.log(arr)) // example
 export default weight_combinator;

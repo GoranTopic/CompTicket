@@ -123,8 +123,8 @@ export default function DocContent({ expand, stocks }) {
             let { timestamp, indicators } = stock.stockChart;
             let { close, open } = indicators.quote[0];
             // get the returns for each close and open for every day
-            let returns = timestamp.map((time, i) => ((close[i] - open[i]) / open[i]).toFixed(3));
-            // add the meanm variant standard dviation
+            let returns = timestamp.map((time, i) => ((close[i] - open[i]) / open[i]));
+            // add the mean variant standard dviation
             return {
                 symbol: stock.symbol,
                 shortname: stock.shortname,
@@ -178,7 +178,7 @@ export default function DocContent({ expand, stocks }) {
         });
         //console.log('portafolio:', portafolio)
         // set efficent fronteer
-        let weightCombinations = weight_combinator(weights.length, 50);
+        let weightCombinations = weight_combinator(weights.length, 10);
         let calcEfficientFrontier = calcEF(stockList, correlations);
         let EF = weightCombinations.map( weights => {
           let [ returns, risk ] = calcEfficientFrontier(weights)
