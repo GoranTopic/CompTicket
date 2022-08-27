@@ -90,49 +90,51 @@ export default function DocContent({ expand, stocks, SDYStock }) {
                         <Typography variant="h4">
                             Calculating the Beta of {stock.shortname} with the S&P 500
                         </Typography>
-                        <Typography>
-                            The Beta is a measure of the volatility of a Stock. Thus it is a measure of how much change does the stock has in price, over a period of time. It is a measure of the variance, and a way to determine the risk.
-                        </Typography>
-                        <Typography>
-                            However, to find the volatility of the stock we need isolate the changes in the stock from the overall changes in the market. We can find the changes in the market by getting the historical values of an index fund, like the S&P 500, which reflects the changes in the 500 most profitable companies in the US.
-                        </Typography>
-                        <Typography>
-                            To find the Beta of {stock.symbol} we need to divide the standard deviation of the returns of {stock.symbol} by the standard deviation of the returns of S&P 500.
-                        </Typography>
-                        <Typography>
-                            Then we multiply it by the correlation of the {stock.symbol} and the S&P 500.
-                        </Typography>
-                        <Typography>
-                            To calcualte the standard deviation of the return we must first find the average return of the {stock.symbol}. From our rate of return analysis we know that the Annualized Rate of Return is: {stock.rateOfReturn}
-                        </Typography>
-                        <Typography>
-                            Using the same process we can find the SDY's Annualized Rate of Return to be {rateOfReturnSDY};
-                        </Typography>
-                        <Typography>
-                            Form the opening and losing value we calculating rate of return of everyday for the {stock.symbol} and the S&P 500. What we get a list of values of th the return and the timestamp.
-                        </Typography>
-                        <Typography>
-                            With this list we can calcualte the standard deviation. Which will turn out to be {stock.retrnsStdDev} for {stock.symbol} and {retrnsStdDevSDY} for S&P 500.
-                        </Typography>
-                        <Typography>
-                            If we divide {stock.retrnsStdDev} / {retrnsStdDevSDY} we get: {(stock.retrnsStdDev / retrnsStdDevSDY).toFixed(3)} which we now have to multiply by the correlation of the {stock.symbol} and the S&P 500.
-                        </Typography>
-                        <Typography>
-                            Before we do that let's chart the data to get a feeling of the correlation between {stock.symbol} and the S&P 500 (gray) returns.
-                        </Typography>
-                        {returnsSDY && stock.returns ?
-                            <Box sx={{ marginY: 4 }}>
-                                <LineChart stocks={[{ ...stock, data: stock.returns }, { ...SDY, data: returnsSDY }]} />
-                            </Box> : <></>}
-                        <Typography>
-                            Now that we can visualize the two data for the stock we can see how correlation coefficient is: {stock.correlationCoefficient.toFixed(5)}.
-                        </Typography>
-                        <Typography>
-                            With this final piece of information we can calculate the Beta of {stock.shortname} by finding: {stock.correlationCoefficient.toFixed(5)} * ({stock.retrnsStdDev} / {retrnsStdDevSDY})  =  {(stock.correlationCoefficient * (stock.retrnsStdDev / retrnsStdDevSDY)).toFixed(3)}
-                        </Typography>
-                        <Typography>
-                            The Beta provided by the Yahoo Finance API for the Stock {stock.symbol} is: {stock.quoteSummary.defaultKeyStatistics?.beta?.fmt ?? "(Beta Not found)"}
-                        </Typography>
+                        <Box sx={{ paddingX: '2%', marginY: '1%' }}>
+                            <Typography>
+                                The Beta is a measure of the volatility of a Stock. Thus it is a measure of how much change does the stock has in price, over a period of time. It is a measure of the variance, and a way to determine the risk.
+                            </Typography>
+                            <Typography>
+                                However, to find the volatility of the stock we need isolate the changes in the stock from the overall changes in the market. We can find the changes in the market by getting the historical values of an index fund, like the S&P 500, which reflects the changes in the 500 most profitable companies in the US.
+                            </Typography>
+                            <Typography>
+                                To find the Beta of {stock.symbol} we need to divide the standard deviation of the returns of {stock.symbol} by the standard deviation of the returns of S&P 500.
+                            </Typography>
+                            <Typography>
+                                Then we multiply it by the correlation of the {stock.symbol} and the S&P 500.
+                            </Typography>
+                            <Typography>
+                                To calcualte the standard deviation of the return we must first find the average return of the {stock.symbol}. From our rate of return analysis we know that the Annualized Rate of Return is: {stock.rateOfReturn}
+                            </Typography>
+                            <Typography>
+                                Using the same process we can find the SDY's Annualized Rate of Return to be {rateOfReturnSDY};
+                            </Typography>
+                            <Typography>
+                                Form the opening and losing value we calculating rate of return of everyday for the {stock.symbol} and the S&P 500. What we get a list of values of th the return and the timestamp.
+                            </Typography>
+                            <Typography>
+                                With this list we can calcualte the standard deviation. Which will turn out to be {stock.retrnsStdDev} for {stock.symbol} and {retrnsStdDevSDY} for S&P 500.
+                            </Typography>
+                            <Typography>
+                                If we divide {stock.retrnsStdDev} / {retrnsStdDevSDY} we get: {(stock.retrnsStdDev / retrnsStdDevSDY).toFixed(3)} which we now have to multiply by the correlation of the {stock.symbol} and the S&P 500.
+                            </Typography>
+                            <Typography>
+                                Before we do that let's chart the data to get a feeling of the correlation between {stock.symbol} and the S&P 500 (gray) returns.
+                            </Typography>
+                            {returnsSDY && stock.returns ?
+                                <Box sx={{ marginY: 4 }}>
+                                    <LineChart stocks={[{ ...stock, data: stock.returns }, { ...SDY, data: returnsSDY }]} />
+                                </Box> : <></>}
+                            <Typography>
+                                Now that we can visualize the two data for the stock we can see how correlation coefficient is: {stock.correlationCoefficient.toFixed(5)}.
+                            </Typography>
+                            <Typography>
+                                With this final piece of information we can calculate the Beta of {stock.shortname} by finding: {stock.correlationCoefficient.toFixed(5)} * ({stock.retrnsStdDev} / {retrnsStdDevSDY})  =  {(stock.correlationCoefficient * (stock.retrnsStdDev / retrnsStdDevSDY)).toFixed(3)}
+                            </Typography>
+                            <Typography>
+                                The Beta provided by the Yahoo Finance API for the Stock {stock.symbol} is: {stock.quoteSummary.defaultKeyStatistics?.beta?.fmt ?? "(Beta Not found)"}
+                            </Typography>
+                        </Box>
                     </Box>
                 )}
             </ThemeProvider>
