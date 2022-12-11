@@ -4,7 +4,7 @@ import axios from 'axios';
 //axios.get(cors_proxy + `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${encodeURIComponent(stock)}`)
 
 // server address
-let cors_proxy = 'http://128.199.9.124:4236/';
+let cors_proxy = 'http://147.182.241.239:4236/';
 
 // super secret token, don't share =P
 let token = '5df54d27-26d0-43ce-aef1-34d71e0b0dbb';
