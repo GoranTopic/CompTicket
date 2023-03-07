@@ -9,7 +9,7 @@ import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
 import { lightTheme } from './theme.js'
 import { query_multiple_modules, query_stock_chart, scrape_financial_data } from './queries/query_yahoo'
-import { unpackfinancialStaments } from './utils/unpacker';
+import { unpackFinancialStaments } from './utils/unpacker';
 import FinancialStatements from './components/cards/FinancialStaments';
 import StockChip from './components/StockChips.js';
 import KeyStadistics from './components/cards/KeyStadistics';
@@ -63,7 +63,7 @@ function App() {
     // check if it is not already in array
     if (stocks.some(s => s?.symbol === selectedStock?.symbol)) // handle with error code
       return console.error(`Stock: ${selectedStock.symbol} already selected`);
-    // start quetirs
+    // start queries
     (async () => {
       let data = {};
       await Promise.all([
@@ -74,8 +74,9 @@ function App() {
         load_chart(selectedStock)
           .then(res => data['stockChart'] = res),
         // testing scrape balance sheet
-        scrape_financial_data(selectedStock)
-          .then(res => data = { ...data, ...unpackfinancialStaments(res) }),
+        //scrape_financial_data(selectedStock)
+          // need to find a wayt o to scrap the financial staments from Yahoo website
+          //.then(res => { console.log('fs:', res);  data = { ...data, ...unpackFinancialStaments(res) } }),
       ]);
       // set the data queried
       setStocks([...stocks, { ...selectedStock, ...data, color: colors[stocks.length], active: true }]);

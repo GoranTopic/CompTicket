@@ -1,4 +1,4 @@
-const unpackfinancialStaments = financialStatments => ({
+const unpackFinancialStaments = financialStatments => ({
     balanceSheet: financialStatments["balanceSheetHistory"].balanceSheetStatements[0],
     balanceSheetQuarterly: financialStatments["balanceSheetHistoryQuarterly"].balanceSheetStatements[0],
     cashFlow: financialStatments["cashflowStatementHistory"].cashflowStatements[0],
@@ -7,4 +7,4 @@ const unpackfinancialStaments = financialStatments => ({
     incomeStatmentQuartery: financialStatments["incomeStatementHistoryQuarterly"].incomeStatementHistory[0],
 })
 
-export  { unpackfinancialStaments }
+export  { unpackFinancialStaments }
