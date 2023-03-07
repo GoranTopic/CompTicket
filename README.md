@@ -12,6 +12,6 @@
 	you can test the it by running: 
 	`npm start`
 	Finnaly to deploy moving the files in the build folder to the html apache2 folder
-	`sudo cp -rvf ./build/* /var/www/html/CompTicket`
+	`sudo cp -rvf ./build/* /var/www/CompTicket`
 
 

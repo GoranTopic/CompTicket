@@ -9,7 +9,7 @@ import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
 import { lightTheme } from './theme.js'
 import { query_multiple_modules, query_stock_chart, scrape_financial_data } from './queries/query_yahoo'
-import { unpackFinancialStaments } from './utils/unpacker';
+//import { unpackFinancialStaments } from './utils/unpacker';
 import FinancialStatements from './components/cards/FinancialStaments';
 import StockChip from './components/StockChips.js';
 import KeyStadistics from './components/cards/KeyStadistics';
